@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC   -shared -Wl,-soname,libimglib.so -o libimglib.so CMakeFiles/imglib_shared.dir/src/mat.cpp.o CMakeFiles/imglib_shared.dir/src/image_decoder.cpp.o 

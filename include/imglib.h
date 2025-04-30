@@ -3,71 +3,73 @@
 #include <string>
 #include <vector>
 
-enum class CVType
-{
-    CV_8U,  // 8位无符号整数 (uchar)
-    CV_8S,  // 8位有符号整数 (schar)
-    CV_16U, // 16位无符号整数 (ushort)
-    CV_16S, // 16位有符号整数 (short)
-    CV_32S, // 32位有符号整数 (int)
-    CV_32F, // 32位浮点数 (float)
-    CV_64F, // 64位浮点数 (double)
-    CV_16F  // 16位浮点数 (半精度)
-};
+#define CV_8U 0  // 8位无符号整数 (uchar)
+#define CV_16U 2 // 16位无符号整数 (ushort)
 
-enum class CVChannel
-{
-    C1 = 1, // 单通道
-    C3 = 3, // 三通道
-    C4 = 4  // 四通道
-};
+#define CV_8S 1  // 8位有符号整数 (schar)
+#define CV_16S 3 // 16位有符号整数 (short)
+#define CV_32S 4 // 32位有符号整数 (int)
 
-// CV_MAKETYPE(depth, cn) 将深度和通道数组合成一个类型
-constexpr int CV_MAKETYPE(CVType depth, CVChannel cn)
-{
-    return static_cast<int>(depth) + (static_cast<int>(cn) << 3);
-}
+#define CV_32F 5 // 32位浮点数 (float)
+#define CV_64F 6 // 64位浮点数 (double)
+#define CV_16F 7 // 16位浮点数 (半精度)
 
-// 常用类型定义
-constexpr int CV_8UC1 = CV_MAKETYPE(CVType::CV_8U, CVChannel::C1);
-constexpr int CV_8UC3 = CV_MAKETYPE(CVType::CV_8U, CVChannel::C3);
-constexpr int CV_8UC4 = CV_MAKETYPE(CVType::CV_8U, CVChannel::C4);
+#define CV_MAKETYPE(depth, cn) ((depth) + ((cn) << 3)) 
+#define CV_MAT_DEPTH(type) ((type) & 7)//取低三位
+#define CV_MAT_CN(type) (((type) >> 3) + 1)//取高五位
 
-constexpr int CV_16UC1 = CV_MAKETYPE(CVType::CV_16U, CVChannel::C1);
-constexpr int CV_16UC3 = CV_MAKETYPE(CVType::CV_16U, CVChannel::C3);
-constexpr int CV_16UC4 = CV_MAKETYPE(CVType::CV_16U, CVChannel::C4);
+// 8位无符号整型 - 不同通道组合
+#define CV_8UC1 CV_MAKETYPE(CV_8U, 1)
+#define CV_8UC3 CV_MAKETYPE(CV_8U, 3)
+#define CV_8UC4 CV_MAKETYPE(CV_8U, 4)
 
-constexpr int CV_32FC1 = CV_MAKETYPE(CVType::CV_32F, CVChannel::C1);
-constexpr int CV_32FC3 = CV_MAKETYPE(CVType::CV_32F, CVChannel::C3);
-constexpr int CV_32FC4 = CV_MAKETYPE(CVType::CV_32F, CVChannel::C4);
+// 8位有符号整型 - 不同通道组合
+#define CV_8SC1 CV_MAKETYPE(CV_8S, 1)
+#define CV_8SC3 CV_MAKETYPE(CV_8S, 3)
+#define CV_8SC4 CV_MAKETYPE(CV_8S, 4)
 
-constexpr int CV_MAT_DEPTH(int type)
-{
-    return type & 7;
-}
+// 16位无符号整型 - 不同通道组合
+#define CV_16UC1 CV_MAKETYPE(CV_16U, 1)
+#define CV_16UC3 CV_MAKETYPE(CV_16U, 3)
+#define CV_16UC4 CV_MAKETYPE(CV_16U, 4)
 
-constexpr int CV_MAT_CN(int type)
-{
-    return (type >> 3) + 1;
-}
+// 16位有符号整型 - 不同通道组合
+#define CV_16SC1 CV_MAKETYPE(CV_16S, 1)
+#define CV_16SC3 CV_MAKETYPE(CV_16S, 3)
+#define CV_16SC4 CV_MAKETYPE(CV_16S, 4)
 
-enum class Error_Type
-{
-    OUT_OF_MEMORY,
-    INSUFFICIENT_DISK_SPACE,
-    DIVIDE_BY_ZERO,
-    INVALID_ARGUMENT,
-    INVALID_OPERATION,
-    UNSUPPORTED_FORMAT,
-    UNSUPPORTED_OPERATION,
-    UNSUPPORTED_IMAGE_SIZE,
-    UNSUPPORTED_IMAGE_TYPE,
-    UNSUPPORTED_IMAGE_CHANNEL,
-    UNSUPPORTED_IMAGE_DEPTH,
-    UNSUPPORTED_IMAGE_DATA,
-    UNSUPPORTED_IMAGE_DATA_TYPE,
-    FILE_NOT_FOUND
-};
+// 32位有符号整型 - 不同通道组合
+#define CV_32SC1 CV_MAKETYPE(CV_32S, 1)
+#define CV_32SC3 CV_MAKETYPE(CV_32S, 3)
+#define CV_32SC4 CV_MAKETYPE(CV_32S, 4)
+
+// 32位浮点型 - 不同通道组合
+#define CV_32FC1 CV_MAKETYPE(CV_32F, 1)
+#define CV_32FC3 CV_MAKETYPE(CV_32F, 3)
+#define CV_32FC4 CV_MAKETYPE(CV_32F, 4)
+
+// 64位浮点型 - 不同通道组合
+#define CV_64FC1 CV_MAKETYPE(CV_64F, 1)
+#define CV_64FC3 CV_MAKETYPE(CV_64F, 3)
+#define CV_64FC4 CV_MAKETYPE(CV_64F, 4)
+
+// enum class Error_Type
+// {
+//     OUT_OF_MEMORY,
+//     INSUFFICIENT_DISK_SPACE,
+//     DIVIDE_BY_ZERO,
+//     INVALID_ARGUMENT,
+//     INVALID_OPERATION,
+//     UNSUPPORTED_FORMAT,
+//     UNSUPPORTED_OPERATION,
+//     UNSUPPORTED_IMAGE_SIZE,
+//     UNSUPPORTED_IMAGE_TYPE,
+//     UNSUPPORTED_IMAGE_CHANNEL,
+//     UNSUPPORTED_IMAGE_DEPTH,
+//     UNSUPPORTED_IMAGE_DATA,
+//     UNSUPPORTED_IMAGE_DATA_TYPE,
+//     FILE_NOT_FOUND
+// };
 
 class Mat
 {
@@ -129,10 +131,8 @@ class ImageDecoder
 public:
     virtual ~ImageDecoder() = default;
 
-    // 检查文件格式是否支持
     virtual bool checkFormat(const std::string &filename) const = 0;
 
-    // 解码图像文件
     virtual Mat decode(const std::string &filename, int flags = 0) const = 0;
 };
 
