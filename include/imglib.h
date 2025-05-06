@@ -3,14 +3,11 @@
 #include <cstddef>
 #include <string>
 #include <vector>
-// #include <memory> // 不再使用 shared_ptr
 #include <stdexcept>
 #include <cassert>
 #include <algorithm>
 #include <cstring>
-#include <atomic>         // 如果需要线程安全的引用计数，可以使用 atomic；如果不需要，可以用普通 int
-#include <fstream>        // 用于文件 I/O
-#include <vector>         // 用于 imwrite 参数
+#include <vector>        // 用于 imwrite 参数
 #include <memory>
 #include <unordered_map> // 用于 ImageIOFactory 中的处理器映射
 
