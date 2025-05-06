@@ -725,3 +725,74 @@ Image &Image::operator-=(const Image &other)
     }
     return *this;
 }
+
+
+Image Image::roi(size_t x, size_t y, size_t width, size_t height) const
+{
+    // 1. 检查当前图像是否为空
+    if (this->empty())
+    {
+        throw std::logic_error("Image::roi - Cannot create ROI from an empty image.");
+    }
+
+    // 2. 检查ROI参数的有效性
+    //    - ROI的右下角不能超出原图的右下角
+    //    - ROI的宽度和高度必须大于0
+    if (x >= m_cols || y >= m_rows ||                 // ROI的左上角就在原图外部或边缘
+        width == 0 || height == 0 ||                  // ROI的尺寸为0
+        x + width > m_cols || y + height > m_rows)    // ROI的右下角超出了原图边界
+    {
+        // 可以提供更详细的错误信息
+        std::string error_msg = "Image::roi - ROI parameters are out of bounds or invalid. ";
+        error_msg += "Original (rows, cols): (" + std::to_string(m_rows) + ", " + std::to_string(m_cols) + "). ";
+        error_msg += "ROI (x, y, width, height): (" + std::to_string(x) + ", " + std::to_string(y) + ", " +
+                       std::to_string(width) + ", " + std::to_string(height) + ").";
+        throw std::out_of_range(error_msg);
+    }
+
+    // 3. 创建一个新的 Image 对象 (它会调用默认构造函数，初始为空)
+    Image roi_view;
+
+    // 4. 设置 roi_view 的成员以共享数据和引用计数
+    roi_view.m_datastorage = this->m_datastorage; // 共享底层数据存储的起始指针
+    roi_view.m_refcount = this->m_refcount;       // 共享引用计数指针
+
+    // 5. 增加引用计数
+    //    必须检查 m_refcount 是否为 nullptr，尽管在非空图像中它不应该是。
+    //    this->m_datastorage 和 this->m_refcount 应该是被 this->allocate() 初始化的。
+    //    如果 this 不是空的，那么 this->m_refcount 应该指向一个有效的 int。
+    if (roi_view.m_refcount)
+    {
+        (*roi_view.m_refcount)++;
+    }
+    else
+    {
+        // 这种情况理论上不应该发生在非空图像上，除非 Image 类的内部状态管理有误
+        // 或者它是一个通过特殊方式创建的、不管理自己数据的 Image 对象（但这不符合当前设计）
+        // 为安全起见，可以抛出异常或断言失败
+        assert(false && "Image::roi - Source image is not empty but has no refcount. Inconsistent state.");
+        throw std::logic_error("Image::roi - Source image has inconsistent reference counting state.");
+    }
+
+
+    // 6. 设置 roi_view 的数据指针和维度信息
+    //    m_data_start 指向此ROI视图在共享数据块中的实际起始位置
+    //    注意：this->m_data_start 本身可能已经是一个ROI的起始点，如果Image对象可以嵌套创建ROI
+    //    但根据我们之前的讨论，更简单的模型是 this->m_data_start 总是指向 this->m_datastorage 对于一个非ROI图像
+    //    如果 Image 本身可以是一个 ROI 视图，那么计算基准应该是 this->m_data_start
+    //    当前设计中，m_data_start 就是实际数据的开始，m_datastorage 是分配块的开始。
+    //    如果原图本身就是一个ROI，它的 m_data_start 已经是指向子区域了。
+    //    所以，新的ROI的 m_data_start 应该是基于当前视图的 m_data_start 计算。
+    roi_view.m_data_start = this->m_data_start + (y * this->m_step) + (x * this->get_pixel_size());
+
+    roi_view.m_rows = height;
+    roi_view.m_cols = width;
+    roi_view.m_type = this->m_type;
+    roi_view.m_channel_size = this->m_channel_size;
+
+    // ROI 的行步长 (m_step) 与父图像相同，因为内存布局没有改变
+    roi_view.m_step = this->m_step;
+
+    // 7. 返回创建的 ROI 视图
+    return roi_view;
+}

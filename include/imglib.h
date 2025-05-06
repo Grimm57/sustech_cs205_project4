@@ -7,48 +7,42 @@
 #include <cassert>
 #include <algorithm>
 #include <cstring>
-#include <vector>        // 用于 imwrite 参数
+#include <vector>
 #include <memory>
-#include <unordered_map> // 用于 ImageIOFactory 中的处理器映射
+#include <unordered_map>
 
 namespace img
 {
 
-#define IMG_8U 0  // 8位无符号整数 (unsigned char)
-#define IMG_16U 1 // 16位无符号整数 (unsigned short)
-#define IMG_32S 2 // 32位有符号整数 (int)
-#define IMG_32F 3 // 32位浮点数 (float)
-#define IMG_64F 4 // 64位浮点数 (double)
+#define IMG_8U 0
+#define IMG_16U 1
+#define IMG_32S 2
+#define IMG_32F 3
+#define IMG_64F 4
 
-// type = depth + ( (cn-1) << 3 ),低三位为depth，高五位为通道数
 #define IMG_MAKETYPE(depth, cn) ((depth) + (((cn) - 1) << 3))
-#define IMG_DEPTH(type) ((type) & 7)              // 取类型整数的低3位
-#define IMG_CN(type) ((((type) >> 3) & 0x1F) + 1) // 现在只支持1,3,4,不过最多可以支持32个通道
+#define IMG_DEPTH(type) ((type) & 7)
+#define IMG_CN(type) ((((type) >> 3) & 0x1F) + 1)
 
-// 8位无符号整数类型
-#define IMG_8UC1 IMG_MAKETYPE(IMG_8U, 1) // 单通道 unsigned char 图像
-#define IMG_8UC3 IMG_MAKETYPE(IMG_8U, 3) // 3通道 unsigned char 图像 (例如 BGR/RGB)
-#define IMG_8UC4 IMG_MAKETYPE(IMG_8U, 4) // 4通道 unsigned char 图像 (例如 BGRA/RGBA)
+#define IMG_8UC1 IMG_MAKETYPE(IMG_8U, 1)
+#define IMG_8UC3 IMG_MAKETYPE(IMG_8U, 3)
+#define IMG_8UC4 IMG_MAKETYPE(IMG_8U, 4)
 
-// 16位无符号整数类型
-#define IMG_16UC1 IMG_MAKETYPE(IMG_16U, 1) // 单通道 unsigned short 图像
-#define IMG_16UC3 IMG_MAKETYPE(IMG_16U, 3) // 3通道 unsigned short 图像
-#define IMG_16UC4 IMG_MAKETYPE(IMG_16U, 4) // 4通道 unsigned short 图像
+#define IMG_16UC1 IMG_MAKETYPE(IMG_16U, 1)
+#define IMG_16UC3 IMG_MAKETYPE(IMG_16U, 3)
+#define IMG_16UC4 IMG_MAKETYPE(IMG_16U, 4)
 
-// 32位有符号整数类型
-#define IMG_32SC1 IMG_MAKETYPE(IMG_32S, 1) // 单通道 int 图像
-#define IMG_32SC3 IMG_MAKETYPE(IMG_32S, 3) // 3通道 int 图像
-#define IMG_32SC4 IMG_MAKETYPE(IMG_32S, 4) // 4通道 int 图像
+#define IMG_32SC1 IMG_MAKETYPE(IMG_32S, 1)
+#define IMG_32SC3 IMG_MAKETYPE(IMG_32S, 3)
+#define IMG_32SC4 IMG_MAKETYPE(IMG_32S, 4)
 
-// 32位浮点数类型
-#define IMG_32FC1 IMG_MAKETYPE(IMG_32F, 1) // 单通道 float 图像
-#define IMG_32FC3 IMG_MAKETYPE(IMG_32F, 3) // 3通道 float 图像
-#define IMG_32FC4 IMG_MAKETYPE(IMG_32F, 4) // 4通道 float 图像
+#define IMG_32FC1 IMG_MAKETYPE(IMG_32F, 1)
+#define IMG_32FC3 IMG_MAKETYPE(IMG_32F, 3)
+#define IMG_32FC4 IMG_MAKETYPE(IMG_32F, 4)
 
-// 64位浮点数类型
-#define IMG_64FC1 IMG_MAKETYPE(IMG_64F, 1) // 单通道 double 图像
-#define IMG_64FC3 IMG_MAKETYPE(IMG_64F, 3) // 3通道 double 图像
-#define IMG_64FC4 IMG_MAKETYPE(IMG_64F, 4) // 4通道 double 图像
+#define IMG_64FC1 IMG_MAKETYPE(IMG_64F, 1)
+#define IMG_64FC3 IMG_MAKETYPE(IMG_64F, 3)
+#define IMG_64FC4 IMG_MAKETYPE(IMG_64F, 4)
 
     /**
      * @brief 表示一个二维图像的核心类，其设计受到了 `cv::Mat` 的启发。
@@ -63,7 +57,6 @@ namespace img
     class Image
     {
     public:
-        // --- 构造函数与析构函数 ---
         /** @brief 默认构造函数。创建一个空的 Image 对象。 */
         Image();
 
@@ -100,8 +93,6 @@ namespace img
          */
         ~Image();
 
-        // --- 赋值运算符 ---
-
         /**
          * @brief 拷贝赋值运算符。
          * 使当前对象共享 `other` 的数据。如果当前对象之前拥有数据，会先减少其引用计数（可能释放）。
@@ -118,8 +109,6 @@ namespace img
          * @return 对当前对象的引用。
          */
         Image &operator=(Image &&other);
-
-        // --- 核心操作 ---
 
         /**
          * @brief 创建图像的深拷贝（克隆）。
@@ -156,11 +145,6 @@ namespace img
          */
         bool empty() const { return m_data_start == nullptr || m_rows == 0 || m_cols == 0; };
 
-        ////////////////// getter 方法 //////////////////
-
-        // 省略了 this ->
-        // const 关键字保证方法不会修改对象的状态
-
         /** @brief 返回图像的行数。 */
         size_t get_rows() const { return m_rows; }
 
@@ -177,9 +161,8 @@ namespace img
         size_t get_step() const { return m_step; }
 
         /** @brief 返回单个通道元素占用的字节数 (例如 IMG_8U 为 1, IMG_32F 为 4)。 */
-        size_t get_channel_size() const { return m_channel_size; }; // 直接返回成员变量
+        size_t get_channel_size() const { return m_channel_size; };
 
-        ///////////////////////// 其它成员方法 //////////////////
         /**
          * @brief 检查两个图像是否兼容进行逐元素操作。
          * 兼容条件：两者都非空，具有相同的行数、列数和类型。
@@ -211,7 +194,7 @@ namespace img
          * @brief 返回指向图像数据起始位置的常量指针。
          * @return 指向图像有效数据起始位置的 `const unsigned char*` 指针。如果图像为空，则为 `nullptr`。
          */
-        const unsigned char *data() const { return m_data_start; } // 如果声明了一个const的对象，只能调用这个函数
+        const unsigned char *data() const { return m_data_start; }
 
         /**
          * @brief 返回指向指定行的起始位置的指针。
@@ -228,8 +211,6 @@ namespace img
          * @throws std::out_of_range 如果行索引 `r` 无效 (小于0或大于等于 `rows()`)。
          */
         const unsigned char *ptr(int r) const;
-
-        // --- 像素访问模板函数 ---
 
         /**
          * @brief 提供对指定位置像素的直接访问（读写）。
@@ -252,9 +233,7 @@ namespace img
             {
                 throw std::out_of_range("Image::at - 访问索引超出图像边界。");
             }
-            // 计算像素地址：数据起始地址 + 行偏移 + 列偏移
-            // 行偏移 = 行索引 * 每行的字节数 (步长)
-            // 列偏移 = 列索引 * 每个像素的字节数
+
             return *reinterpret_cast<T *>(m_data_start + row * m_step + col * get_pixel_size());
         };
 
@@ -277,11 +256,10 @@ namespace img
             {
                 throw std::out_of_range("Image::at (const) - 访问索引超出图像边界。");
             }
-            // 计算地址的方式相同，但返回 const 引用
+
             return *reinterpret_cast<const T *>(m_data_start + row * m_step + col * get_pixel_size());
         };
 
-        // 减法和除法不存在 scalar -;/ image
         /** @brief 图像与标量的复合加法赋值 (逐像素)。 */
         Image &operator+=(double scalar);
         Image operator+(double scalar);
@@ -311,29 +289,42 @@ namespace img
          * @throws std::runtime_error 如果图像不兼容。
          */
         Image &operator-=(const Image &other);
-        
+
         /** @brief 返回当前数据的引用计数（主要用于调试）。 */
         int get_refcount() const { return m_refcount ? *m_refcount : 0; }
+
+        /**
+         * @brief 创建一个表示当前图像感兴趣区域（ROI）的新 Image 对象（视图）。
+         *
+         * 这个新的 Image 对象与原始图像共享底层的像素数据和引用计数。
+         * 对ROI视图的修改会直接反映在原始图像的对应区域。
+         * ROI视图的 m_step 与原始图像的 m_step 相同。
+         *
+         * @param x ROI左上角在当前图像中的列索引（0-based）。
+         * @param y ROI左上角在当前图像中的行索引（0-based）。
+         * @param width ROI的宽度（列数）。
+         * @param height ROI的高度（行数）。
+         * @return 一个新的 Image 对象，它是原始图像指定区域的一个视图。
+         * @throws std::out_of_range 如果ROI参数指定的区域超出了当前图像的边界，
+         *                           或者 width/height 为0或导致访问非法内存。
+         * @throws std::logic_error 如果当前图像为空 (this->empty())。
+         */
+        Image roi(size_t start_x, size_t start_y, size_t width, size_t height) const;
+
     private:
         /** @brief 内部辅助函数：分配内存块（包括引用计数区域） */
         void allocate(size_t rows, size_t cols, int type);
 
+        size_t m_rows = 0;
+        size_t m_cols = 0;
+        char m_type = -1;
+        unsigned char m_channel_size = 0;
 
+        size_t m_step = 0;
 
-        // --- 成员变量 ---
-        size_t m_rows = 0;                // 图像行数
-        size_t m_cols = 0;                // 图像列数
-        char m_type = -1;                 // 图像类型 (结合了深度和通道)
-        unsigned char m_channel_size = 0; // 每个通道的字节数 (例如 IMG_8U 为 1, IMG_32F 为 4)
+        unsigned char *m_data_start = nullptr;
+        unsigned char *m_datastorage = nullptr;
 
-        size_t m_step = 0; // 每行数据的字节数 (步长/stride)，包括可能的填充
-
-        // 将引用计数器和实际的像素数据存储在同一块连续分配的内存中。
-        unsigned char *m_data_start = nullptr;  // 给计算图像大小用的
-        unsigned char *m_datastorage = nullptr; // 给delete[]用的
-
-        // 指向引用计数的指针。该计数位于分配的内存块的起始位置。
-        // 如果 m_refcount 为 nullptr，表示 Image 对象不拥有任何数据。
         int *m_refcount = nullptr;
     };
 
@@ -345,7 +336,7 @@ namespace img
      * @param value 要加到每个像素通道的值。
      * @throws std::runtime_error 如果图像为空或类型不支持。
      */
-    void adjust_brightness(Image &img, double value); 
+    void adjust_brightness(Image &img, double value);
 
     /**
      * @brief 使用加权平均 (alpha 混合) 将两张图像混合。
@@ -358,7 +349,7 @@ namespace img
      * @param alpha 第一个图像的权重，应在 [0.0, 1.0] 范围内。
      * @throws std::runtime_error 如果输入图像不兼容或类型不支持。
      */
-    void blend_images(const Image &img1, const Image &img2, Image &output, double alpha); 
+    void blend_images(const Image &img1, const Image &img2, Image &output, double alpha);
 
     /**
      * @brief 旋转图像指定次数（每次90度顺时针）。
@@ -381,7 +372,6 @@ namespace img
      */
     Image resize_images(const Image &src, size_t new_rows, size_t new_cols);
 
-    ////////////////IO操作函数声明/////////////////////
     /**
      * @brief 图像文件 I/O 处理器的抽象基类。
      *
@@ -423,7 +413,6 @@ namespace img
          * @return 一个包含支持的扩展名（例如 "png", "jpg", "jpeg", "bmp"）的字符串向量。
          */
         virtual std::vector<std::string> getSupportedExtensions() const = 0;
-
     };
 
     /**
@@ -447,7 +436,6 @@ namespace img
          */
         static ImageIOFactory &getInstance();
 
-        // 禁止拷贝和移动构造/赋值，以维护单例模式
         ImageIOFactory(const ImageIOFactory &) = delete;
         ImageIOFactory &operator=(const ImageIOFactory &) = delete;
         ImageIOFactory(ImageIOFactory &&) = delete;
@@ -486,8 +474,6 @@ namespace img
         static std::string getFileExtensionLower(const std::string &filename);
     };
 
-    // --- 顶级 I/O 函数 (使用工厂) ---
-
     /**
      * @brief 从文件加载图像 (使用工厂模式)。
      *
@@ -513,4 +499,4 @@ namespace img
      *         如果找不到合适的处理器、图像为空、与格式不兼容或写入文件失败，则返回 `false`。
      */
     bool imwrite(const std::string &filename, const Image &img, const std::vector<int> &params = std::vector<int>());
-} // namespace img
+}
