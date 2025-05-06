@@ -311,13 +311,14 @@ namespace img
          * @throws std::runtime_error 如果图像不兼容。
          */
         Image &operator-=(const Image &other);
-
+        
+        /** @brief 返回当前数据的引用计数（主要用于调试）。 */
+        int get_refcount() const { return m_refcount ? *m_refcount : 0; }
     private:
         /** @brief 内部辅助函数：分配内存块（包括引用计数区域） */
         void allocate(size_t rows, size_t cols, int type);
 
-        /** @brief 返回当前数据的引用计数（主要用于调试）。 */
-        int get_refcount() const { return m_refcount ? *m_refcount : 0; }
+
 
         // --- 成员变量 ---
         size_t m_rows = 0;                // 图像行数

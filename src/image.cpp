@@ -142,7 +142,7 @@ Image &Image::operator=(const Image &other)
  */
 Image &Image::operator=(Image &&other)
 {
-    // 1. 处理自赋值 (虽然移动自赋值不常见，但处理一下更安全)
+    // 1. 处理自赋值 
     if (this == &other)
     {
         return *this;
@@ -185,7 +185,6 @@ Image Image::clone() const
     if (empty())
     {
         throw std::runtime_error("Image::clone - 无法克隆空图像。");
-        // 或者可以返回一个空的 Image: return Image(); 但头文件建议抛异常
     }
 
     // 1. 创建一个新的 Image 对象，具有相同的尺寸和类型。
@@ -263,8 +262,7 @@ void Image::release()
     m_channel_size = 0;
     m_step = 0;
     m_data_start = nullptr;
-    m_datastorage = nullptr; // 即使没释放，m_datastorage 也应清空
-                             // 因为当前对象不再负责它 (被 release 调用清除 m_refcount 后)
+    m_datastorage = nullptr; // 即使没释放，当前对象不再负责它 (被 release 调用清除 m_refcount 后)
 }
 
 /**
@@ -275,9 +273,9 @@ void Image::release()
 void Image::allocate(size_t rows, size_t cols, int type)
 {
     // 1. 输入验证
-    if (rows == 0 || cols == 0)
+    if (rows <= 0 || cols <= 0)
     {
-        throw std::runtime_error("Image::allocate - 图像尺寸 (行或列) 不能为零。");
+        throw std::runtime_error("Image::allocate - 图像尺寸 (行或列) 不能小于等于零。");
     }
 
     int depth = IMG_DEPTH(type);
@@ -302,7 +300,6 @@ void Image::allocate(size_t rows, size_t cols, int type)
     case IMG_64F:
         channel_size = 8;
         break; // double
-    // case IMG_16F: // 半精度浮点数，需要特殊库支持，暂不实现
     default:
         throw std::runtime_error("Image::allocate - 不支持的图像深度类型。");
     }
@@ -314,16 +311,12 @@ void Image::allocate(size_t rows, size_t cols, int type)
 
     // 2. 计算内存布局
     size_t pixel_size = channel_size * channels; // 每个像素的总字节数
-    // 计算步长 (每行字节数)。这里不做额外填充，直接使用紧凑格式。
-    // 在更复杂的库中，步长可能会为了对齐而增加。
+    // 计算每行的字节数
     size_t step = cols * pixel_size;
     // 计算纯像素数据所需的总字节数
     size_t data_byte_size = rows * step;
 
     // 计算总共需要分配的内存大小：引用计数 (int) + 像素数据
-    // 为了对齐，可以在引用计数和数据之间加一些填充，但这里简化处理
-    // 确保 data_start 对齐到某个边界 (例如 alignof(double)) 可能更好
-    // 但最简单的实现是紧挨着放
     size_t total_size = sizeof(int) + data_byte_size;
 
     // 3. 分配内存
@@ -335,9 +328,8 @@ void Image::allocate(size_t rows, size_t cols, int type)
     }
     catch (const std::bad_alloc &e)
     {
-        // 如果分配失败，确保对象状态安全并重新抛出异常
         release(); // 确保旧资源已释放 (虽然 create 调用时已释放)
-        throw;     // 重新抛出 std::bad_alloc
+        throw;     
     }
 
     // 4. 初始化内存和成员变量
@@ -356,10 +348,6 @@ void Image::allocate(size_t rows, size_t cols, int type)
     m_type = type;
     m_channel_size = static_cast<unsigned char>(channel_size); // 存储计算出的通道大小
     m_step = step;
-
-    // (可选) 将新分配的像素数据区域清零
-    // std::memset(m_data_start, 0, data_byte_size);
-    // std::cout << "内存已分配: " << total_size << " 字节" << std::endl; // 调试信息
 }
 
 /**
@@ -399,7 +387,6 @@ const unsigned char *Image::ptr(int r) const
 
 // --- 图像与标量的算术操作 ---
 
-// 辅助宏，用于简化算术操作中的类型分发和钳位
 // OP: 要执行的操作 (+, -, *, /)
 // TYPE: C++ 数据类型 (unsigned char, float, etc.)
 // CLAMP_FUNC: 用于钳位的函数 (对于浮点数，是 no-op)
@@ -412,7 +399,7 @@ const unsigned char *Image::ptr(int r) const
             TYPE *pixel_ptr = reinterpret_cast<TYPE *>(row_ptr + c * psz);        \
             for (int chan = 0; chan < cn; ++chan)                                 \
             {                                                                     \
-                /* 先转换为 double 进行计算，再转回 TYPE */                       \
+                /* 先转换为 double 进行计算，再转回 TYPE */                         \
                 double result = static_cast<double>(pixel_ptr[chan]) OP scalar_d; \
                 pixel_ptr[chan] = CLAMP_FUNC(result);                             \
             }                                                                     \
