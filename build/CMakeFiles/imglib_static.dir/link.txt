@@ -1,2 +1,0 @@
-/usr/bin/ar qc libimglib.a  CMakeFiles/imglib_static.dir/src/mat.cpp.o CMakeFiles/imglib_static.dir/src/image_decoder.cpp.o
-/usr/bin/ranlib libimglib.a

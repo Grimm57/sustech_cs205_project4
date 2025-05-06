@@ -44,17 +44,17 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib
+CMAKE_SOURCE_DIR = /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build
+CMAKE_BINARY_DIR = /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build
 
 #=============================================================================
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/imglib_shared.dir/all
-all: CMakeFiles/imglib_static.dir/all
+all: CMakeFiles/img_demo.dir/all
+all: CMakeFiles/imglib.dir/all
 
 .PHONY : all
 
@@ -64,64 +64,64 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/imglib_shared.dir/clean
-clean: CMakeFiles/imglib_static.dir/clean
+clean: CMakeFiles/img_demo.dir/clean
+clean: CMakeFiles/imglib.dir/clean
 
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/imglib_shared.dir
+# Target rules for target CMakeFiles/img_demo.dir
 
 # All Build rule for target.
-CMakeFiles/imglib_shared.dir/all:
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/depend
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles --progress-num=1,2,3 "Built target imglib_shared"
-.PHONY : CMakeFiles/imglib_shared.dir/all
+CMakeFiles/img_demo.dir/all: CMakeFiles/imglib.dir/all
+	$(MAKE) -f CMakeFiles/img_demo.dir/build.make CMakeFiles/img_demo.dir/depend
+	$(MAKE) -f CMakeFiles/img_demo.dir/build.make CMakeFiles/img_demo.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles --progress-num=1,2 "Built target img_demo"
+.PHONY : CMakeFiles/img_demo.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/imglib_shared.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/imglib_shared.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles 0
-.PHONY : CMakeFiles/imglib_shared.dir/rule
+CMakeFiles/img_demo.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles 6
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/img_demo.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles 0
+.PHONY : CMakeFiles/img_demo.dir/rule
 
 # Convenience name for target.
-imglib_shared: CMakeFiles/imglib_shared.dir/rule
+img_demo: CMakeFiles/img_demo.dir/rule
 
-.PHONY : imglib_shared
+.PHONY : img_demo
 
 # clean rule for target.
-CMakeFiles/imglib_shared.dir/clean:
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/clean
-.PHONY : CMakeFiles/imglib_shared.dir/clean
+CMakeFiles/img_demo.dir/clean:
+	$(MAKE) -f CMakeFiles/img_demo.dir/build.make CMakeFiles/img_demo.dir/clean
+.PHONY : CMakeFiles/img_demo.dir/clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/imglib_static.dir
+# Target rules for target CMakeFiles/imglib.dir
 
 # All Build rule for target.
-CMakeFiles/imglib_static.dir/all:
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/depend
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles --progress-num=4,5,6 "Built target imglib_static"
-.PHONY : CMakeFiles/imglib_static.dir/all
+CMakeFiles/imglib.dir/all:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/depend
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles --progress-num=3,4,5,6 "Built target imglib"
+.PHONY : CMakeFiles/imglib.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/imglib_static.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/imglib_static.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles 0
-.PHONY : CMakeFiles/imglib_static.dir/rule
+CMakeFiles/imglib.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles 4
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/imglib.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles 0
+.PHONY : CMakeFiles/imglib.dir/rule
 
 # Convenience name for target.
-imglib_static: CMakeFiles/imglib_static.dir/rule
+imglib: CMakeFiles/imglib.dir/rule
 
-.PHONY : imglib_static
+.PHONY : imglib
 
 # clean rule for target.
-CMakeFiles/imglib_static.dir/clean:
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/clean
-.PHONY : CMakeFiles/imglib_static.dir/clean
+CMakeFiles/imglib.dir/clean:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/clean
+.PHONY : CMakeFiles/imglib.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

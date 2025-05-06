@@ -48,24 +48,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib
+CMAKE_SOURCE_DIR = /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build
+CMAKE_BINARY_DIR = /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -78,11 +67,22 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,90 +111,138 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named imglib_shared
+# Target rules for targets named img_demo
 
 # Build rule for target.
-imglib_shared: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 imglib_shared
-.PHONY : imglib_shared
+img_demo: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 img_demo
+.PHONY : img_demo
 
 # fast build rule for target.
-imglib_shared/fast:
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/build
-.PHONY : imglib_shared/fast
+img_demo/fast:
+	$(MAKE) -f CMakeFiles/img_demo.dir/build.make CMakeFiles/img_demo.dir/build
+.PHONY : img_demo/fast
 
 #=============================================================================
-# Target rules for targets named imglib_static
+# Target rules for targets named imglib
 
 # Build rule for target.
-imglib_static: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 imglib_static
-.PHONY : imglib_static
+imglib: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 imglib
+.PHONY : imglib
 
 # fast build rule for target.
-imglib_static/fast:
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/build
-.PHONY : imglib_static/fast
+imglib/fast:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/build
+.PHONY : imglib/fast
 
-src/image_decoder.o: src/image_decoder.cpp.o
+demo/demo.o: demo/demo.cpp.o
 
-.PHONY : src/image_decoder.o
-
-# target to build an object file
-src/image_decoder.cpp.o:
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/src/image_decoder.cpp.o
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/src/image_decoder.cpp.o
-.PHONY : src/image_decoder.cpp.o
-
-src/image_decoder.i: src/image_decoder.cpp.i
-
-.PHONY : src/image_decoder.i
-
-# target to preprocess a source file
-src/image_decoder.cpp.i:
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/src/image_decoder.cpp.i
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/src/image_decoder.cpp.i
-.PHONY : src/image_decoder.cpp.i
-
-src/image_decoder.s: src/image_decoder.cpp.s
-
-.PHONY : src/image_decoder.s
-
-# target to generate assembly for a file
-src/image_decoder.cpp.s:
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/src/image_decoder.cpp.s
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/src/image_decoder.cpp.s
-.PHONY : src/image_decoder.cpp.s
-
-src/mat.o: src/mat.cpp.o
-
-.PHONY : src/mat.o
+.PHONY : demo/demo.o
 
 # target to build an object file
-src/mat.cpp.o:
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/src/mat.cpp.o
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/src/mat.cpp.o
-.PHONY : src/mat.cpp.o
+demo/demo.cpp.o:
+	$(MAKE) -f CMakeFiles/img_demo.dir/build.make CMakeFiles/img_demo.dir/demo/demo.cpp.o
+.PHONY : demo/demo.cpp.o
 
-src/mat.i: src/mat.cpp.i
+demo/demo.i: demo/demo.cpp.i
 
-.PHONY : src/mat.i
+.PHONY : demo/demo.i
 
 # target to preprocess a source file
-src/mat.cpp.i:
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/src/mat.cpp.i
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/src/mat.cpp.i
-.PHONY : src/mat.cpp.i
+demo/demo.cpp.i:
+	$(MAKE) -f CMakeFiles/img_demo.dir/build.make CMakeFiles/img_demo.dir/demo/demo.cpp.i
+.PHONY : demo/demo.cpp.i
 
-src/mat.s: src/mat.cpp.s
+demo/demo.s: demo/demo.cpp.s
 
-.PHONY : src/mat.s
+.PHONY : demo/demo.s
 
 # target to generate assembly for a file
-src/mat.cpp.s:
-	$(MAKE) -f CMakeFiles/imglib_shared.dir/build.make CMakeFiles/imglib_shared.dir/src/mat.cpp.s
-	$(MAKE) -f CMakeFiles/imglib_static.dir/build.make CMakeFiles/imglib_static.dir/src/mat.cpp.s
-.PHONY : src/mat.cpp.s
+demo/demo.cpp.s:
+	$(MAKE) -f CMakeFiles/img_demo.dir/build.make CMakeFiles/img_demo.dir/demo/demo.cpp.s
+.PHONY : demo/demo.cpp.s
+
+src/image.o: src/image.cpp.o
+
+.PHONY : src/image.o
+
+# target to build an object file
+src/image.cpp.o:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/src/image.cpp.o
+.PHONY : src/image.cpp.o
+
+src/image.i: src/image.cpp.i
+
+.PHONY : src/image.i
+
+# target to preprocess a source file
+src/image.cpp.i:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/src/image.cpp.i
+.PHONY : src/image.cpp.i
+
+src/image.s: src/image.cpp.s
+
+.PHONY : src/image.s
+
+# target to generate assembly for a file
+src/image.cpp.s:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/src/image.cpp.s
+.PHONY : src/image.cpp.s
+
+src/image_io.o: src/image_io.cpp.o
+
+.PHONY : src/image_io.o
+
+# target to build an object file
+src/image_io.cpp.o:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/src/image_io.cpp.o
+.PHONY : src/image_io.cpp.o
+
+src/image_io.i: src/image_io.cpp.i
+
+.PHONY : src/image_io.i
+
+# target to preprocess a source file
+src/image_io.cpp.i:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/src/image_io.cpp.i
+.PHONY : src/image_io.cpp.i
+
+src/image_io.s: src/image_io.cpp.s
+
+.PHONY : src/image_io.s
+
+# target to generate assembly for a file
+src/image_io.cpp.s:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/src/image_io.cpp.s
+.PHONY : src/image_io.cpp.s
+
+src/processor.o: src/processor.cpp.o
+
+.PHONY : src/processor.o
+
+# target to build an object file
+src/processor.cpp.o:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/src/processor.cpp.o
+.PHONY : src/processor.cpp.o
+
+src/processor.i: src/processor.cpp.i
+
+.PHONY : src/processor.i
+
+# target to preprocess a source file
+src/processor.cpp.i:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/src/processor.cpp.i
+.PHONY : src/processor.cpp.i
+
+src/processor.s: src/processor.cpp.s
+
+.PHONY : src/processor.s
+
+# target to generate assembly for a file
+src/processor.cpp.s:
+	$(MAKE) -f CMakeFiles/imglib.dir/build.make CMakeFiles/imglib.dir/src/processor.cpp.s
+.PHONY : src/processor.cpp.s
 
 # Help Target
 help:
@@ -202,16 +250,22 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... edit_cache"
-	@echo "... imglib_shared"
 	@echo "... rebuild_cache"
-	@echo "... imglib_static"
-	@echo "... src/image_decoder.o"
-	@echo "... src/image_decoder.i"
-	@echo "... src/image_decoder.s"
-	@echo "... src/mat.o"
-	@echo "... src/mat.i"
-	@echo "... src/mat.s"
+	@echo "... edit_cache"
+	@echo "... img_demo"
+	@echo "... imglib"
+	@echo "... demo/demo.o"
+	@echo "... demo/demo.i"
+	@echo "... demo/demo.s"
+	@echo "... src/image.o"
+	@echo "... src/image.i"
+	@echo "... src/image.s"
+	@echo "... src/image_io.o"
+	@echo "... src/image_io.i"
+	@echo "... src/image_io.s"
+	@echo "... src/processor.o"
+	@echo "... src/processor.i"
+	@echo "... src/processor.s"
 .PHONY : help
 
 

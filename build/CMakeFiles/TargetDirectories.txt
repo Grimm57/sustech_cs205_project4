@@ -1,4 +1,4 @@
-/home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles/edit_cache.dir
-/home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles/imglib_shared.dir
-/home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles/rebuild_cache.dir
-/home/wu/CppLearning/CS205/PROJECT4_2025/my_imglib/build/CMakeFiles/imglib_static.dir
+/home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles/rebuild_cache.dir
+/home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles/edit_cache.dir
+/home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles/img_demo.dir
+/home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/build/CMakeFiles/imglib.dir

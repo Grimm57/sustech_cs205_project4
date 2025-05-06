@@ -1,0 +1,2 @@
+/usr/bin/ar qc libimglib.a  CMakeFiles/imglib.dir/src/image.cpp.o CMakeFiles/imglib.dir/src/image_io.cpp.o CMakeFiles/imglib.dir/src/processor.cpp.o
+/usr/bin/ranlib libimglib.a
