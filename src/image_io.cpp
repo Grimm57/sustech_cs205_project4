@@ -51,10 +51,7 @@ namespace img
             std::ifstream file(filename, std::ios::binary);
             if (!file.is_open())
             {
-                // 用户报错
                 std::cerr << "BMP 读取错误: 无法打开文件: " << filename << std::endl;
-                // // 调试报错
-                // std::cerr << "BMPHandler::read 错误: 无法打开指定的文件进行读取操作: " << filename << std::endl;
                 return Image(); // 如果没有正确的读取会返回空图片
             }
 
@@ -176,7 +173,7 @@ namespace img
             if (img.get_type() != IMG_MAKETYPE(IMG_8U, 3) && img.get_type() != IMG_MAKETYPE(IMG_8U, 4))
             {
                 // 用户报错
-                std::cerr << "BMP 写入错误: 不支持的图像类型 (仅支持 8UC3 或 8UC4 格式)。" << std::endl;
+                std::cerr << "BMP 写入错误: 不支持的BMP图像类型 (仅支持 8UC3 或 8UC4 格式)。" << std::endl;
                 // // 调试报错
                 // std::cerr << "BMPHandler::write 错误: 尝试写入的 Image 对象类型 (" << img.get_type_string() << ") 不支持 BMP 格式。必须是 8UC3 或 8UC4." << std::endl;
                 return false;
