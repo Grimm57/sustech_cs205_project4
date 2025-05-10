@@ -233,7 +233,7 @@ void bad_test()
     try
     {
         std::string input_path;
-        std::cout << "请输入要读取的图像路径: ";
+        std::cout << "请输入要读取的图像路径: "<< std::endl;
         std::cin >> input_path; // 等待用户输入路径
         img::Image read_img = img::imread(input_path);
         if(read_img.empty() && !input_path.empty()){ // imread 在失败时会打印错误并返回空图像

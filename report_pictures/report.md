@@ -42,7 +42,25 @@
 
 附注：
 
-代码使用方法：我本来的代码结构可以参见github仓库
+我本来的代码结构可以参见github仓库，是分成了include/src之类的文件夹，为了更方便测试，我修改了CMakeLists.txt,现在所有的代码都堆在一个文件夹里即可.
+
+在下载好代码后,如果想构建项目,请将所有相关代码放在一个文件夹内,然后使用
+```
+mkdir build
+cd build
+cmake ..
+make
+```
+来完成库的构建.
+
+同时,你也可以在build文件夹里找到生成的img_demo可执行文件,运行它可以进行库的测试.
+
+如果你想手动链接库,可以使用
+```
+g++ -I. your_program.cpp -L. -limglib -o your_executable_name
+```
+但是要注意要把静态库文件,测试代码以及头文件放在同一目录下.
+
 
 # 一、Image类 (部分参考cv::Mat类)
 
