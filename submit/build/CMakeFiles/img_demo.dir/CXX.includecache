@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/submit/demo.cpp
+iostream
+-
+string
+-
+imglib.h
+/home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/submit/imglib.h
+
+/home/wu/CppLearning/CS205/PROJECT4_2025/sustech_cs205_project4/submit/imglib.h
+cstddef
+-
+string
+-
+vector
+-
+stdexcept
+-
+cstring
+-
+memory
+-
+unordered_map
+-
+iostream
+-
+

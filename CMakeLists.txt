@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.10)
 # 定义项目名称
 project(ImageLibraryProject VERSION 1.0 LANGUAGES CXX)
 
-# 设置 C++ 标准 (例如 C++11, C++14, C++17)
+# 设置 C++ 标准
 # 考虑到使用了 unique_ptr, unordered_map, call_once 等，建议至少 C++11，C++17 更佳
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)

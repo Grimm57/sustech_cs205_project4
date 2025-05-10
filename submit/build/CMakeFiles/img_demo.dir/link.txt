@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/img_demo.dir/demo.cpp.o  -o img_demo  libimglib.a 
